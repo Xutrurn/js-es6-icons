@@ -106,13 +106,25 @@ $(document).ready(function() {
     'purple'
   ];
 
-  const iconTypes = getTypes(icons);
-  console.log(iconTypes);
+  const types = getTypes(icons);
 
 
+  const iconColor = icons.map((element) => {
+
+    const indexType = types.indexOf(element.type);
+
+    return {
+      ...element,
+      color: colors[indexType]
+    }
+
+  });
 
 
+  const container = $('.icons');
 
+
+  printIcons(iconColor, container);
 
 
 });
@@ -120,7 +132,10 @@ $(document).ready(function() {
 
 
 
-// Funzione per filtrare icone in base al tipo
+
+
+
+// Funzione per filtrare array generico in base a chiave per esempio type
 function getTypes(array) {
   const types = [];
 
@@ -131,6 +146,32 @@ function getTypes(array) {
   });
 
   return types;
+
+}
+
+
+// Funzione per aggiungere all'html gli elementi
+function printIcons(array, container) {
+  array.forEach((element) => {
+
+    const {
+      name,
+      family,
+      prefix,
+      type,
+      color
+    } = element;
+
+    container.append(
+      `
+        <div class="icon">
+          <i class="${family} ${prefix}${name}" style="color:${element.color}"></i>
+          <div class="title">${name.toUpperCase()}</div>
+        </div>
+      `
+    );
+
+  });
 
 }
 
