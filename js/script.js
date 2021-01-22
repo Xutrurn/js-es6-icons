@@ -122,13 +122,25 @@ $(document).ready(function() {
 
 
   const container = $('.icons');
-
-
   printIcons(iconColor, container);
 
 
+  const select = $('#type');
+  printOptions(types, select);
+
+
+  select.change(function() {
+    const selected = $(this).val();
+    const filterIcon = filterValue(iconColor, selected);
+
+    printIcons(filterIcon, container);
+
+  });
+
+
+
 });
-// fine doc
+// FINE DOC
 
 
 
@@ -152,6 +164,8 @@ function getTypes(array) {
 
 // Funzione per aggiungere all'html gli elementi
 function printIcons(array, container) {
+  container.html('');
+
   array.forEach((element) => {
 
     const {
@@ -175,6 +189,33 @@ function printIcons(array, container) {
 
 }
 
+
+
+// Funzione per aggiungere elementi alla selezione
+function printOptions(array, select) {
+  array.forEach((element) => {
+    select.append(`
+      <option value="${element}">${element}</option>
+
+      `);
+  });
+}
+
+
+// Funzione  per filtrare gli elementi nella select
+function filterValue(array, type) {
+  const filteredIcons = array.filter((element) => {
+    return element.type == type;
+  });
+
+  if (filteredIcons.length > 0) {
+    return filteredIcons;
+
+  }
+
+  return array;
+
+}
 
 
 
